@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(obj);
         }
 
+        // test commit
+
         txtWelCome = (TextView) findViewById(R.id.txtWelCome);
         if (SessionInformation.LoggedInUser != null){
             String userType = "";
