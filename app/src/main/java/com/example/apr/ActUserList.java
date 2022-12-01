@@ -2,8 +2,12 @@ package com.example.apr;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -36,5 +40,14 @@ public class ActUserList extends AppCompatActivity {
         CS_Adapter cs_adapter = new CS_Adapter(this, liData, R.layout.activity_act_user_list_template,from, to);
         userList_.setAdapter(cs_adapter);
 
+        userList_.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Explicit
+                Intent obj = new Intent(getApplicationContext(), EditUser.class);
+                obj.putExtra("UserEditId", li.get(position).Id);
+                startActivity(obj);
+            }
+        });
     }
 }

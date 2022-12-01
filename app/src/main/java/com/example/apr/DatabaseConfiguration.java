@@ -1,4 +1,6 @@
 package com.example.apr;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -35,8 +38,19 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
 
     public boolean Insert(User user){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ContentValues contentValues = GenericFunctions.ConvertClassIntoContentValues(user);
+        ContentValues contentValues = GenericFunctions.ConvertClassIntoContentValues(user, EntityActionType.INSERT_ACTION);
         long result = sqLiteDatabase.insert("User", null, contentValues);
+        if(result == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean Update(User user){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = GenericFunctions.ConvertClassIntoContentValues(user,EntityActionType.UPDATE_ACTION);
+        long result = sqLiteDatabase.update("User", contentValues, "Id = "+ user.Id, null);
         if(result == -1){
             return false;
         }else{
@@ -70,6 +84,7 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
         ArrayList<User> allUsers = new ArrayList<>();
         while(cursor.moveToNext()){
             User user = new User();
+            user.Id = Integer.parseInt(cursor.getString(0).toString());
             user.FirstName = cursor.getString(1).toString();
             user.LastName = cursor.getString(2).toString();
             user.Email = cursor.getString(3).toString();
@@ -79,36 +94,36 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
         return allUsers;
     }
 
-    public Cursor ViewAllUsers(int id){
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-
-        if (id > 0){
-            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM user WHERE Id=" + id, null);
-            return cursor;
+    public User GetUserById(int id){
+        if (id <= 0){
+            return null;
         }
         else {
-            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM user", null);
-            return cursor;
+            SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM user WHERE Id=" + id, null);
+            if (cursor.getCount() > 0){
+                User user = new User();
+                while (cursor.moveToNext()){
+                    user.Id = Integer.parseInt(cursor.getString(0).toString());
+                    user.FirstName = cursor.getString(1).toString();
+                    user.LastName = cursor.getString(2).toString();
+                    user.Email = cursor.getString(3).toString();
+                    user.Username = cursor.getString(4).toString();
+                    user.Password = cursor.getString(5).toString();
+                    //user.CreatedOn = cursor.getString(6).toString();
+                    user.UserType = Integer.parseInt(cursor.getString(7).toString());
+                }
+                return user;
+            }
+            else {
+                return null;
+            }
         }
     }
 
     public Integer DeleteUser(int id) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         return sqLiteDatabase.delete("User", "Id = " + id, null);
-    }
-
-    public boolean UpdateUser(int id, String username, String password, String email){
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("Username", username);
-        contentValues.put("Password", password);
-        contentValues.put("Email", email);
-        long result = sqLiteDatabase.update("User", contentValues, "Id = " + id, null);
-        if(result == -1){
-            return false;
-        }else{
-            return true;
-        }
     }
 
     public boolean IsColumnExists(String tablename, String columnname){
@@ -128,6 +143,6 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
             sqLiteDatabase.execSQL("ALTER TABLE User ADD UserType INTEGER DEFAULT 0 NOT NULL");
         }
         // sqLiteDatabase.execSQL("DELETE FROM User");
-        // sqLiteDatabase.execSQL("insert into User (firstname, lastname, email, username, password, createdon, usertype) values ('ali','haider','ali@gmail.com','ali','123456',date(), 1)");
+        // slacsqLiteDatabase.execSQL("insert into User (firstname, lastname, email, username, password, createdon, usertype) values ('ali','haider','ali@gmail.com','ali','123456',date(), 1)");
     }
 }

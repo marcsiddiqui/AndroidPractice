@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        GenericFunctions.SendEmail(getApplicationContext());
+
         databaseConfiguration = new DatabaseConfiguration(this);
         databaseConfiguration.ExecuteQuery();
 
@@ -33,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
         if (SessionInformation.LoggedInUser != null){
             String userType = "";
             if (SessionInformation.LoggedInUser.UserType == 1){
-                // Explicit
-                Intent obj = new Intent(getApplicationContext(), Act_AdminDashboard.class);
-                startActivity(obj);
+//                // Explicit
+//                Intent obj = new Intent(getApplicationContext(), Act_AdminDashboard.class);
+//                startActivity(obj);
             }
             else if (SessionInformation.LoggedInUser.UserType == 2){
                 // Explicit
