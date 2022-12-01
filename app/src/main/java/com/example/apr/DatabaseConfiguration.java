@@ -81,17 +81,7 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
     public ArrayList<User> GetAllUsers(){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM User", null);
-        ArrayList<User> allUsers = new ArrayList<>();
-        while(cursor.moveToNext()){
-            User user = new User();
-            user.Id = Integer.parseInt(cursor.getString(0).toString());
-            user.FirstName = cursor.getString(1).toString();
-            user.LastName = cursor.getString(2).toString();
-            user.Email = cursor.getString(3).toString();
-            user.Username = cursor.getString(4).toString();
-            allUsers.add(user);
-        }
-        return allUsers;
+        return GenericFunctions.ConvertCursorToClassCollection(cursor, User.class);
     }
 
     public User GetUserById(int id){
@@ -145,4 +135,6 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
         // sqLiteDatabase.execSQL("DELETE FROM User");
         // slacsqLiteDatabase.execSQL("insert into User (firstname, lastname, email, username, password, createdon, usertype) values ('ali','haider','ali@gmail.com','ali','123456',date(), 1)");
     }
+
+
 }

@@ -8,6 +8,7 @@ package com.example.apr;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
@@ -55,6 +56,78 @@ public class GenericFunctions {
             }
         }
         return hm;
+    }
+
+    public static <T> ArrayList<T> ConvertCursorToClassCollection(Cursor cursor, Class<T> cls) {
+
+        ArrayList<T> li = new ArrayList<>();
+
+        if (cursor != null && cursor.getCount() > 0) {
+            Field[] fields = cls.getDeclaredFields();
+            String[] columns = cursor.getColumnNames();
+            //Toast.makeText(context, columns.length+"", Toast.LENGTH_SHORT).show();
+            try {
+                while (cursor.moveToNext()) {
+                    T bean = cls.newInstance();
+                    for (String column : columns) {
+                        //Toast.makeText(context, column, Toast.LENGTH_SHORT).show();
+                        Field field = findFieldByName(fields, column);
+                        field.set(bean, getValueByField(cursor, column, field));
+//                        String letter = column.substring(0, 1)
+//                                .toUpperCase();
+//
+//                        Toast.makeText(context, letter, Toast.LENGTH_SHORT).show();
+//                        String setter = "set" + letter
+//                                + column.substring(1);
+//                        Method setMethod = cls.getMethod(setter,
+//                                new Class[] { field.getType() });
+//                        setMethod.invoke(bean,
+//                                getValueByField(cursor, column, field));
+                    }
+                    li.add(bean);
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
+        return li;
+    }
+
+    private static Field findFieldByName(Field[] fields, String name) {
+        for (Field field : fields) {
+            if (field.getName().equals(name)) {
+                return field;
+            }
+        }
+        return null;
+    }
+
+    private static Object getValueByField(Cursor cursor, String columnName, Field field) {
+        int index = cursor.getColumnIndex(columnName);
+        if (index == -1)
+            return null;
+        Class fieldClass = field.getType();
+
+        if (fieldClass == String.class)
+            return cursor.getString(index);
+
+        else if (fieldClass == int.class || fieldClass == Integer.class)
+            return cursor.getInt(index);
+        else if (fieldClass == Long.class)
+            return cursor.getLong(index);
+
+        else if (fieldClass == Double.class)
+            return cursor.getDouble(index);
+
+        else if (fieldClass == Float.class)
+            return cursor.getFloat(index);
+
+        else if (fieldClass == Short.class)
+            return cursor.getShort(index);
+
+        return null;
     }
 
 //    public static void SendEmail(Context context){
