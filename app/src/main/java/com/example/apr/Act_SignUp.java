@@ -14,8 +14,8 @@ import java.util.Date;
 
 public class Act_SignUp extends AppCompatActivity {
 
-    EditText  txt_FirstName, txt_LastName, txt_Email, txt_Username, txt_Password, txt_ConfirmPassword, txt_UserType;
-    TextView error_firstName, error_lastName, error_email, error_username, error_password, error_confirmPassword, error_userType;
+    EditText  txt_FirstName, txt_LastName, txt_Email, txt_Username, txt_Password, txt_ConfirmPassword/*, txt_UserType*/;
+    TextView error_firstName, error_lastName, error_email, error_username, error_password, error_confirmPassword/*, error_userType*/;
     Button btnSignUp;
     DatabaseConfiguration databaseConfiguration;
 
@@ -30,7 +30,7 @@ public class Act_SignUp extends AppCompatActivity {
         txt_Username = (EditText) findViewById(R.id.txt_Username);
         txt_Password = (EditText) findViewById(R.id.txt_Password);
         txt_ConfirmPassword = (EditText) findViewById(R.id.txt_ConfirmPassword);
-        txt_UserType = (EditText) findViewById(R.id.txt_UserType);
+//        txt_UserType = (EditText) findViewById(R.id.txt_UserType);
 
         error_firstName = (TextView) findViewById(R.id.error_firstName);
         error_lastName = (TextView) findViewById(R.id.error_lastName);
@@ -38,7 +38,7 @@ public class Act_SignUp extends AppCompatActivity {
         error_username = (TextView) findViewById(R.id.error_username);
         error_password = (TextView) findViewById(R.id.error_password);
         error_confirmPassword = (TextView) findViewById(R.id.error_confirmPassword);
-        error_userType = (TextView) findViewById(R.id.error_userType);
+//        error_userType = (TextView) findViewById(R.id.error_userType);
 
         btnSignUp = (Button) findViewById(R.id.btnSignUp);
 
@@ -54,9 +54,9 @@ public class Act_SignUp extends AppCompatActivity {
                 String usernameTxt = txt_Username.getText().toString();
                 String passwordTxt = txt_Password.getText().toString();
                 String confirmPasswordTxt = txt_ConfirmPassword.getText().toString();
-                int userType = Integer.parseInt(txt_UserType.getText().toString());
+//                int userType = Integer.parseInt(txt_UserType.getText().toString());
 
-                Toast.makeText(getApplicationContext(), userType +"Column not existing", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), userType +"Column not existing", Toast.LENGTH_LONG).show();
 
                 if (firstNameTxt.equals("") || firstNameTxt == null){
                     error_firstName.setText("First Name is required!");
@@ -100,12 +100,12 @@ public class Act_SignUp extends AppCompatActivity {
                 else {
                     error_confirmPassword.setText("");
                 }
-                if (userType < 1 && userType > 2){
-                    error_userType.setText("Invalid User Type!");
-                }
-                else {
-                    error_userType.setText("");
-                }
+//                if (userType < 1 && userType > 2){
+//                    error_userType.setText("Invalid User Type!");
+//                }
+//                else {
+//                    error_userType.setText("");
+//                }
 
                 if (
                     firstNameTxt.equals("") || firstNameTxt == null ||
@@ -114,8 +114,8 @@ public class Act_SignUp extends AppCompatActivity {
                     usernameTxt.equals("") || usernameTxt == null ||
                     passwordTxt.equals("") || passwordTxt == null ||
                     confirmPasswordTxt.equals("") || confirmPasswordTxt == null ||
-                    !passwordTxt.equals(confirmPasswordTxt) ||
-                    (userType < 1 && userType > 2)
+                    !passwordTxt.equals(confirmPasswordTxt)// ||
+//                    (userType < 1 && userType > 2)
                 ) {
 
                 }
@@ -129,10 +129,12 @@ public class Act_SignUp extends AppCompatActivity {
                     user.Password = passwordTxt;
                     Date date = new Date();
                     user.CreatedOn = date;
-                    user.UserType = userType;
+                    user.UserType = 2;
 
                     if (databaseConfiguration.Insert(user)){
                         Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+
+                        databaseConfiguration.InsertNotification(new Notification("New User Arrived",  user.FirstName + " " + user.LastName +" is registered in your site recently."));
 
                         Intent obj = new Intent(getApplicationContext(), Act_LogIn.class);
                         startActivity(obj);

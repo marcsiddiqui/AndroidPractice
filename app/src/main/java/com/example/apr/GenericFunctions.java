@@ -47,8 +47,13 @@ public class GenericFunctions {
                     continue;
                 }
                 try {
-                    Object ab = field.get(cls);
-                    hm.put(field.getName(), ab.toString());
+                    if (cls.getClass().getSimpleName().equals("Notification") && field.getName().equals("IsRead")){
+                        hm.put(field.getName(), false);
+                    }
+                    else {
+                        Object ab = field.get(cls);
+                        hm.put(field.getName(), ab.toString());
+                    }
                 }
                 catch (Exception e) {
                     System.out.println("Error");

@@ -36,6 +36,8 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
         }
     }
 
+    //region User Related Methods
+
     public boolean Insert(User user){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = GenericFunctions.ConvertClassIntoContentValues(user, EntityActionType.INSERT_ACTION);
@@ -78,24 +80,6 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
         }
     }
 
-    public ArrayList<User> GetAllUsers(){
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM User", null);
-        return GenericFunctions.ConvertCursorToClassCollection(cursor, User.class);
-    }
-
-    public ArrayList<Product> GetAllProducts(){
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Product", null);
-        return GenericFunctions.ConvertCursorToClassCollection(cursor, Product.class);
-    }
-
-    public ArrayList<Order> GetAllOrders(){
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM [Order]", null);
-        return GenericFunctions.ConvertCursorToClassCollection(cursor, Order.class);
-    }
-
     public User GetUserById(int id){
         if (id <= 0){
             return null;
@@ -128,6 +112,93 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
         return sqLiteDatabase.delete("User", "Id = " + id, null);
     }
 
+    public ArrayList<User> GetAllUsers(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM User", null);
+        return GenericFunctions.ConvertCursorToClassCollection(cursor, User.class);
+    }
+
+    //endregion
+
+    //region Notification Related Methods
+
+    public boolean InsertNotification(Notification notification){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = GenericFunctions.ConvertClassIntoContentValues(notification, EntityActionType.INSERT_ACTION);
+        long result = sqLiteDatabase.insert("Notification", null, contentValues);
+        if(result == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean UpdateNotification(Notification notification){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = GenericFunctions.ConvertClassIntoContentValues(notification,EntityActionType.UPDATE_ACTION);
+        long result = sqLiteDatabase.update("Notification", contentValues, "Id = "+ notification.Id, null);
+        if(result == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public Notification GetNotificationById(int id){
+        if (id <= 0){
+            return null;
+        }
+        else {
+            SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Notification WHERE Id=" + id, null);
+            if (cursor.getCount() > 0){
+                Notification notification = new Notification();
+                while (cursor.moveToNext()){
+                    notification.Id = Integer.parseInt(cursor.getString(0).toString());
+                    notification.Title = cursor.getString(1).toString();
+                    notification.Description = cursor.getString(2).toString();
+                    //notification.CreatedOn = cursor.getD(3).toString();
+                    //notification.IsRead = cursor.(4).toString();
+                }
+                return notification;
+            }
+            else {
+                return null;
+            }
+        }
+    }
+
+    public ArrayList<Notification> GetAllUnReadNotifications(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Notification WHERE IsRead = 0", null);
+
+        Toast.makeText(context, cursor.getCount()+"", Toast.LENGTH_SHORT).show();
+
+        return GenericFunctions.ConvertCursorToClassCollection(cursor, Notification.class);
+    }
+
+    //endregion
+
+
+
+
+
+    public ArrayList<Product> GetAllProducts(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Product", null);
+        return GenericFunctions.ConvertCursorToClassCollection(cursor, Product.class);
+    }
+
+    public ArrayList<Order> GetAllOrders(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM [Order]", null);
+        return GenericFunctions.ConvertCursorToClassCollection(cursor, Order.class);
+    }
+
+
+
+    //region General Methods
+
     public boolean IsColumnExists(String tablename, String columnname){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM pragma_table_info('"+tablename+"') WHERE name = '"+columnname+"'", null);
@@ -141,12 +212,13 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
 
     public void ExecuteQuery(){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        if (!IsColumnExists("User", "UserType")){
-            sqLiteDatabase.execSQL("ALTER TABLE User ADD UserType INTEGER DEFAULT 0 NOT NULL");
-        }
+//        if (!IsColumnExists("User", "UserType")){
+//            sqLiteDatabase.execSQL("ALTER TABLE User ADD UserType INTEGER DEFAULT 0 NOT NULL");
+//        }
         // sqLiteDatabase.execSQL("DELETE FROM User");
         // slacsqLiteDatabase.execSQL("insert into User (firstname, lastname, email, username, password, createdon, usertype) values ('ali','haider','ali@gmail.com','ali','123456',date(), 1)");
+//        sqLiteDatabase.execSQL("CREATE TABLE Notification (Id INTEGER PRIMARY KEY AUTOINCREMENT, Title TEXT, Description TEXT, CreatedOn DATETIME, IsRead BIT)");
     }
 
-
+    //endregion
 }

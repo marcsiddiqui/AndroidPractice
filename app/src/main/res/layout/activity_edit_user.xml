@@ -135,4 +135,12 @@
         android:text="Save Changes"
         />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnDeleteUser"
+        android:backgroundTint="@color/error"
+        android:text="Delete"
+        />
+
 </LinearLayout>

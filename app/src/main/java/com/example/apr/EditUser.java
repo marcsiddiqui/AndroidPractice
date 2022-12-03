@@ -16,7 +16,7 @@ public class EditUser extends AppCompatActivity {
 
     EditText txt_FirstName, txt_LastName, txt_Email, txt_Username, txt_Password, txt_ConfirmPassword, txt_UserType;
     TextView error_firstName, error_lastName, error_email, error_username, error_password, error_confirmPassword, error_userType;
-    Button btnSaveChanges;
+    Button btnSaveChanges, btnDeleteUser;
     DatabaseConfiguration databaseConfiguration;
 
     @Override
@@ -41,6 +41,7 @@ public class EditUser extends AppCompatActivity {
         error_userType = (TextView) findViewById(R.id.error_userType);
 
         btnSaveChanges = (Button) findViewById(R.id.btnSaveChanges);
+        btnDeleteUser = (Button) findViewById(R.id.btnDeleteUser);
 
         databaseConfiguration = new DatabaseConfiguration(this);
 
@@ -161,6 +162,16 @@ public class EditUser extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
                     }
                 }
+            }
+        });
+
+        btnDeleteUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseConfiguration.DeleteUser(userId);
+                // Explicit
+                Intent obj = new Intent(getApplicationContext(), ActUserList.class);
+                startActivity(obj);
             }
         });
     }

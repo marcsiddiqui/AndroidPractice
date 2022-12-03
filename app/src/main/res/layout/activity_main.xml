@@ -39,4 +39,14 @@
         android:onClick="GoToUserList"
         />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnNotifications"
+        android:backgroundTint="@color/warning"
+        android:text=""
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        />
+
 </LinearLayout>

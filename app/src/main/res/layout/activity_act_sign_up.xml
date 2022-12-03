@@ -102,7 +102,7 @@
         android:textColor="@color/error"
         />
 
-    <EditText
+    <!--<EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="2 = Student, 3 = Parent"
@@ -116,7 +116,7 @@
         android:text=""
         android:id="@+id/error_userType"
         android:textColor="@color/error"
-        />
+        />-->
 
     <Button
         android:layout_width="match_parent"
