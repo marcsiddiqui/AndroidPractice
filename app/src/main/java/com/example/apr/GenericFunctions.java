@@ -59,9 +59,7 @@ public class GenericFunctions {
     }
 
     public static <T> ArrayList<T> ConvertCursorToClassCollection(Cursor cursor, Class<T> cls) {
-
         ArrayList<T> li = new ArrayList<>();
-
         if (cursor != null && cursor.getCount() > 0) {
             Field[] fields = cls.getDeclaredFields();
             String[] columns = cursor.getColumnNames();
@@ -69,9 +67,11 @@ public class GenericFunctions {
             try {
                 while (cursor.moveToNext()) {
                     T bean = cls.newInstance();
+
                     for (String column : columns) {
                         //Toast.makeText(context, column, Toast.LENGTH_SHORT).show();
                         Field field = findFieldByName(fields, column);
+
                         field.set(bean, getValueByField(cursor, column, field));
 //                        String letter = column.substring(0, 1)
 //                                .toUpperCase();

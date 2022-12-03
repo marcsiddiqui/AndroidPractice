@@ -84,6 +84,18 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
         return GenericFunctions.ConvertCursorToClassCollection(cursor, User.class);
     }
 
+    public ArrayList<Product> GetAllProducts(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Product", null);
+        return GenericFunctions.ConvertCursorToClassCollection(cursor, Product.class);
+    }
+
+    public ArrayList<Order> GetAllOrders(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM [Order]", null);
+        return GenericFunctions.ConvertCursorToClassCollection(cursor, Order.class);
+    }
+
     public User GetUserById(int id){
         if (id <= 0){
             return null;
