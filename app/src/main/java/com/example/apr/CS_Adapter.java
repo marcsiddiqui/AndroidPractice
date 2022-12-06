@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,11 +37,11 @@ public class CS_Adapter extends SimpleAdapter {
 //            }
 //        });
 
-//        TextView textView = (TextView) view.findViewById(R.id.liTxt);
+//        TextView textView = (TextView) view.findViewById(R.id.markAsReadText);
 //        textView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                Toast.makeText(context, data.get(position).get("Heading"), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, data.get(position).get("Title"), Toast.LENGTH_SHORT).show();
 //            }
 //        });
 

@@ -50,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
                     notifcationCount = notifications.size();
                 }
 
-                for (Notification notification : notifications){
-                    Toast.makeText(this, notifcationCount + " notifications", Toast.LENGTH_SHORT).show();
-                }
+//                for (Notification notification : notifications){
+//                    Toast.makeText(this, notifcationCount + " notifications", Toast.LENGTH_SHORT).show();
+//                }
 
 
 

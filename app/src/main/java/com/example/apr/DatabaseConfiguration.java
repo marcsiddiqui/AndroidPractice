@@ -172,7 +172,7 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Notification WHERE IsRead = 0", null);
 
-        Toast.makeText(context, cursor.getCount()+"", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, cursor.getCount()+"", Toast.LENGTH_SHORT).show();
 
         return GenericFunctions.ConvertCursorToClassCollection(cursor, Notification.class);
     }
@@ -180,6 +180,13 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
     public void ReadAllNotificaitons(){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.execSQL("UPDATE Notification SET IsRead = 1 WHERE IsRead = 0");
+    }
+
+    public void MarkSpecificNotificationAsRead(int id){
+        if (id > 0){
+            SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+            sqLiteDatabase.execSQL("UPDATE Notification SET IsRead = 1 WHERE Id = " + id);
+        }
     }
 
     //endregion
@@ -224,7 +231,7 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
         // slacsqLiteDatabase.execSQL("insert into User (firstname, lastname, email, username, password, createdon, usertype) values ('ali','haider','ali@gmail.com','ali','123456',date(), 1)");
 //        sqLiteDatabase.execSQL("CREATE TABLE Notification (Id INTEGER PRIMARY KEY AUTOINCREMENT, Title TEXT, Description TEXT, CreatedOn DATETIME, IsRead BIT)");
 
-        //sqLiteDatabase.execSQL("UPDATE Notification SET IsRead = 0");
+//        sqLiteDatabase.execSQL("UPDATE Notification SET IsRead = 0");
     }
 
     //endregion

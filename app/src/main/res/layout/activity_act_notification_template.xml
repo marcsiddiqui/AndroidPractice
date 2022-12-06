@@ -1,29 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Act_NotificationTemplate"
-    android:orientation="vertical"
     android:padding="15px">
 
     <TextView
+        android:id="@+id/notificationTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/notificationTitle"
         android:text="Test Name"
-        android:textSize="80px"
+        android:textSize="50px"
         android:textStyle="bold"
-        android:layout_marginBottom="10px"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/notificationDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/notificationDescription"
         android:text="Test Name"
-        android:textSize="70px"
-        />
+        android:textSize="48px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notificationTitle" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/markAsReadText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mark as read"
+        android:textSize="40px"
+        android:textColor="#0066ff"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notificationDescription" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
