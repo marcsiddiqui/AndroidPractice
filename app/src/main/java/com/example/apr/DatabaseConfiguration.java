@@ -177,6 +177,11 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
         return GenericFunctions.ConvertCursorToClassCollection(cursor, Notification.class);
     }
 
+    public void ReadAllNotificaitons(){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.execSQL("UPDATE Notification SET IsRead = 1 WHERE IsRead = 0");
+    }
+
     //endregion
 
 
@@ -218,6 +223,8 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
         // sqLiteDatabase.execSQL("DELETE FROM User");
         // slacsqLiteDatabase.execSQL("insert into User (firstname, lastname, email, username, password, createdon, usertype) values ('ali','haider','ali@gmail.com','ali','123456',date(), 1)");
 //        sqLiteDatabase.execSQL("CREATE TABLE Notification (Id INTEGER PRIMARY KEY AUTOINCREMENT, Title TEXT, Description TEXT, CreatedOn DATETIME, IsRead BIT)");
+
+        //sqLiteDatabase.execSQL("UPDATE Notification SET IsRead = 0");
     }
 
     //endregion

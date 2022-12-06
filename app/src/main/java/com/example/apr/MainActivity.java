@@ -81,4 +81,10 @@ public class MainActivity extends AppCompatActivity {
         Intent obj = new Intent(getApplicationContext(), ActUserList.class);
         startActivity(obj);
     }
+
+    public void GoToNotifications(View view) {
+        // Explicit
+        Intent obj = new Intent(getApplicationContext(), Act_NotificationList.class);
+        startActivity(obj);
+    }
 }
