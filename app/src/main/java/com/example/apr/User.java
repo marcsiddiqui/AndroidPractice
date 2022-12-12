@@ -11,4 +11,5 @@ public class User {
     String Password;
     Date CreatedOn;
     int UserType;
+    byte[] ProfileImage;
 }

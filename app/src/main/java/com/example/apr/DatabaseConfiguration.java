@@ -224,14 +224,18 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
 
     public void ExecuteQuery(){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-//        if (!IsColumnExists("User", "UserType")){
-//            sqLiteDatabase.execSQL("ALTER TABLE User ADD UserType INTEGER DEFAULT 0 NOT NULL");
-//        }
-        // sqLiteDatabase.execSQL("DELETE FROM User");
-        // slacsqLiteDatabase.execSQL("insert into User (firstname, lastname, email, username, password, createdon, usertype) values ('ali','haider','ali@gmail.com','ali','123456',date(), 1)");
+        if (!IsColumnExists("User", "UserType")){
+            sqLiteDatabase.execSQL("ALTER TABLE User ADD UserType INTEGER DEFAULT 0 NOT NULL");
+        }
+//         sqLiteDatabase.execSQL("DELETE FROM User");
+//         sqLiteDatabase.execSQL("insert into User (firstname, lastname, email, username, password, createdon, usertype) values ('ali','haider','ali@gmail.com','ali','123456',date(), 1)");
 //        sqLiteDatabase.execSQL("CREATE TABLE Notification (Id INTEGER PRIMARY KEY AUTOINCREMENT, Title TEXT, Description TEXT, CreatedOn DATETIME, IsRead BIT)");
-
+//
 //        sqLiteDatabase.execSQL("UPDATE Notification SET IsRead = 0");
+
+        if (!IsColumnExists("User", "ProfileImage")){
+            sqLiteDatabase.execSQL("ALTER TABLE User ADD ProfileImage BYTE NULL");
+        }
     }
 
     //endregion

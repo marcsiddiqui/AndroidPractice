@@ -127,6 +127,13 @@
         android:textColor="@color/error"
         />
 
+    <ImageView
+        android:layout_width="250px"
+        android:layout_height="250px"
+        android:id="@+id/imgProfile"
+        android:src="@drawable/profile"
+        />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
