@@ -96,6 +96,9 @@ public class EditUser extends AppCompatActivity {
                 txt_Password.setText(user.Password);
                 txt_ConfirmPassword.setText(user.Password);
                 txt_UserType.setText(Integer.toString(user.UserType));
+
+                Bitmap bmp= BitmapFactory.decodeByteArray(user.ProfileImage, 0 , user.ProfileImage.length);
+                imgProfile.setImageBitmap(bmp);
             }
         }
 

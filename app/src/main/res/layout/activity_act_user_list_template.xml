@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,53 +7,70 @@
     tools:context=".ActUserListTemplate"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+
+    <TextView
+        android:id="@+id/user_FirstName"
+        android:layout_width="298dp"
+        android:layout_height="28dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="17dp"
+        android:layout_toEndOf="@+id/imgProfileImg"
+        android:text="First Name"
+        android:textSize="60px"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/user_LastName"
+        android:layout_width="298dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/user_FirstName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="17dp"
+        android:layout_toEndOf="@+id/imgProfileImg"
+        android:text="Last Name"
+        android:textSize="60px"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/user_Username"
+        android:layout_width="145dp"
+        android:layout_height="17dp"
+        android:layout_below="@+id/user_LastName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="104dp"
+        android:layout_toEndOf="@+id/user_Email"
+        android:text="Username"
+        android:textSize="30px"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/user_Email"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/user_FirstName"
-            android:text="Test Name"
-            android:textSize="60px"
-            android:textStyle="bold"
-            />
+        android:layout_below="@+id/imgProfileImg"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="4dp"
+        android:text="Email"
+        android:textSize="30px"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/user_LastName"
-            android:text="Test Name"
-            android:textSize="60px"
-            android:textStyle="bold"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/user_Username"
-            android:text="Test Name"
-            android:textSize="60px"
-            android:textStyle="bold"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/user_Email"
-            android:text="Test Name"
-            android:textSize="60px"
-            android:textStyle="bold"
-            />
-
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/imgProfileImg"
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/profile" />
 
 
-
-</LinearLayout>
+</RelativeLayout>

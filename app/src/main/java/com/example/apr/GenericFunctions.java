@@ -34,6 +34,7 @@ public class GenericFunctions {
         Field[] fileds = cls.getClass().getDeclaredFields();
         for(Field field: fileds){
             try {
+
                 Object ab = field.get(cls);
                 hm.put(field.getName(), ab.toString());
             }
@@ -59,6 +60,10 @@ public class GenericFunctions {
                 try {
                     if (cls.getClass().getSimpleName().equals("Notification") && field.getName().equals("IsRead")){
                         hm.put(field.getName(), false);
+                    }
+                    else if (cls.getClass().getSimpleName().equals("User") && field.getName().equals("ProfileImage")){
+                        Object ab = field.get(cls);
+                        hm.put(field.getName(), (byte[]) ab);
                     }
                     else {
                         Object ab = field.get(cls);
@@ -125,6 +130,9 @@ public class GenericFunctions {
             return null;
         Class fieldClass = field.getType();
 
+        String test1 = field.getType().getSimpleName().toLowerCase();
+        String test2 = Byte[].class.getSimpleName().toLowerCase();
+
         if (fieldClass == String.class)
             return cursor.getString(index);
 
@@ -141,6 +149,9 @@ public class GenericFunctions {
 
         else if (fieldClass == Short.class)
             return cursor.getShort(index);
+
+        else if (test1 == test2)
+            return cursor.getBlob(index);
 
         return null;
     }

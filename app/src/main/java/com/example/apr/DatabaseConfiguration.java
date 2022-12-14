@@ -66,13 +66,7 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
         if(cursor.getCount() > 0){
             User user = new User();
             while(cursor.moveToNext()){
-                user.FirstName = cursor.getString(1).toString();
-                user.LastName = cursor.getString(2).toString();
-                user.Email = cursor.getString(3).toString();
-                user.Username = cursor.getString(4).toString();
-                user.Password = cursor.getString(5).toString();
-                user.UserType = Integer.parseInt(cursor.getString(7).toString());
-                //user.CreatedOn = cursor.getString(6).toString();
+                user = UserBinder(cursor);
             }
             return user;
         }else{
@@ -90,14 +84,7 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
             if (cursor.getCount() > 0){
                 User user = new User();
                 while (cursor.moveToNext()){
-                    user.Id = Integer.parseInt(cursor.getString(0).toString());
-                    user.FirstName = cursor.getString(1).toString();
-                    user.LastName = cursor.getString(2).toString();
-                    user.Email = cursor.getString(3).toString();
-                    user.Username = cursor.getString(4).toString();
-                    user.Password = cursor.getString(5).toString();
-                    //user.CreatedOn = cursor.getString(6).toString();
-                    user.UserType = Integer.parseInt(cursor.getString(7).toString());
+                    user = UserBinder(cursor);
                 }
                 return user;
             }
@@ -115,7 +102,34 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
     public ArrayList<User> GetAllUsers(){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM User", null);
-        return GenericFunctions.ConvertCursorToClassCollection(cursor, User.class);
+
+        if (cursor.getCount() > 0){
+
+            ArrayList<User> li = new ArrayList<>();
+
+            while (cursor.moveToNext()){
+                li.add(UserBinder(cursor));
+            }
+
+            return li;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public User UserBinder(Cursor cursor){
+        User user = new User();
+        user.Id = Integer.parseInt(cursor.getString(0).toString());
+        user.FirstName = cursor.getString(1).toString();
+        user.LastName = cursor.getString(2).toString();
+        user.Email = cursor.getString(3).toString();
+        user.Username = cursor.getString(4).toString();
+        user.Password = cursor.getString(5).toString();
+        //user.CreatedOn = cursor.getString(6).toString();
+        user.UserType = Integer.parseInt(cursor.getString(7).toString());
+        user.ProfileImage = cursor.getBlob(8);
+        return user;
     }
 
     //endregion
@@ -224,18 +238,20 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
 
     public void ExecuteQuery(){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        if (!IsColumnExists("User", "UserType")){
-            sqLiteDatabase.execSQL("ALTER TABLE User ADD UserType INTEGER DEFAULT 0 NOT NULL");
-        }
-//         sqLiteDatabase.execSQL("DELETE FROM User");
+//        if (!IsColumnExists("User", "UserType")){
+//            sqLiteDatabase.execSQL("ALTER TABLE User ADD UserType INTEGER DEFAULT 0 NOT NULL");
+//        }
+////         sqLiteDatabase.execSQL("DELETE FROM User");
 //         sqLiteDatabase.execSQL("insert into User (firstname, lastname, email, username, password, createdon, usertype) values ('ali','haider','ali@gmail.com','ali','123456',date(), 1)");
 //        sqLiteDatabase.execSQL("CREATE TABLE Notification (Id INTEGER PRIMARY KEY AUTOINCREMENT, Title TEXT, Description TEXT, CreatedOn DATETIME, IsRead BIT)");
+////
+////        sqLiteDatabase.execSQL("UPDATE Notification SET IsRead = 0");
+////
+//            //sqLiteDatabase.execSQL("alter table User drop column ProfileImage");
 //
-//        sqLiteDatabase.execSQL("UPDATE Notification SET IsRead = 0");
-
-        if (!IsColumnExists("User", "ProfileImage")){
-            sqLiteDatabase.execSQL("ALTER TABLE User ADD ProfileImage BYTE NULL");
-        }
+//        if (!IsColumnExists("User", "ProfileImage")){
+//            sqLiteDatabase.execSQL("ALTER TABLE User ADD ProfileImage BLOG");
+//        }
     }
 
     //endregion
