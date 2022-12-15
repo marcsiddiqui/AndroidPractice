@@ -131,7 +131,7 @@
         android:layout_width="250px"
         android:layout_height="250px"
         android:id="@+id/imgProfile"
-        android:src="@drawable/profile"
+
         />
 
     <Button
