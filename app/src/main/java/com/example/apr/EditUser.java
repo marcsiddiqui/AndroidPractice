@@ -42,7 +42,6 @@ public class EditUser extends AppCompatActivity {
     DatabaseConfiguration databaseConfiguration;
 
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
-    private Button btnSelect;
     private String userChoosenTask;
     byte[] profileBytes;
 
@@ -97,8 +96,15 @@ public class EditUser extends AppCompatActivity {
                 txt_ConfirmPassword.setText(user.Password);
                 txt_UserType.setText(Integer.toString(user.UserType));
 
-                Bitmap bmp= BitmapFactory.decodeByteArray(user.ProfileImage, 0 , user.ProfileImage.length);
-                imgProfile.setImageBitmap(bmp);
+                if (user != null && user.ProfileImage != null){
+                    try{
+                        Bitmap bmp= BitmapFactory.decodeByteArray(user.ProfileImage, 0 , user.ProfileImage.length);
+                        imgProfile.setImageBitmap(bmp);
+                    }
+                    catch (Exception e) {
+
+                    }
+                }
             }
         }
 
@@ -218,56 +224,6 @@ public class EditUser extends AppCompatActivity {
         });
     }
 
-    private boolean CheckCameraPermission() {
-        boolean check1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED;
-        boolean check2 = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED;
-        return check1 && check2;
-    }
-
-    private void RequestCameraPermission() {
-        requestPermissions(new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 100);
-    }
-
-    private boolean CheckStoragePermission() {
-        boolean check1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED;
-        return check1;
-    }
-
-    private void RequestStoragePermission() {
-        requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, 100);
-    }
-
-    private void PickImage() {
-//        // start picker to get image for cropping and then use the image in cropping activity
-//        CropImage.activity()
-//                .setGuidelines(CropImageView.Guidelines.ON)
-//                .start(this);
-    }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == RESULT_OK) {
-//            Uri selectedImageUri = data.getData();
-//            try {
-//                InputStream stream = getContentResolver().openInputStream(selectedImageUri);
-//                Bitmap bitmap = BitmapFactory.decodeStream(stream);
-//                imgProfile.setImageBitmap(bitmap);
-//            }
-//            catch (Exception e){
-//                e.printStackTrace();;
-//            }
-//        }
-//    }
-
-    public byte[] UriToImageBytes(ImageView imageView){
-        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] bytes = stream.toByteArray();
-        return bytes;
-    }
-
     public void BitmapToBytes(Bitmap bitmap){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -384,5 +340,10 @@ public class EditUser extends AppCompatActivity {
 
         imgProfile.setImageBitmap(bm);
         BitmapToBytes(bm);
+    }
+
+    public void GoToUserList(View view) {
+        Intent obj = new Intent(getApplicationContext(), ActUserList.class);
+        startActivity(obj);
     }
 }

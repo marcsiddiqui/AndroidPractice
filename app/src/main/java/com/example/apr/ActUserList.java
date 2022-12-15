@@ -37,7 +37,7 @@ public class ActUserList extends AppCompatActivity {
         String from[] = { "FirstName", "LastName", "Username", "Email" };
         int to[] = { R.id.user_FirstName, R.id.user_LastName, R.id.user_Username, R.id.user_Email };
 
-        CS_Adapter cs_adapter = new CS_Adapter(this, liData, R.layout.activity_act_user_list_template,from, to);
+        UserAdapter cs_adapter = new UserAdapter(this, liData, R.layout.activity_act_user_list_template,from, to);
         userList_.setAdapter(cs_adapter);
 
         userList_.setOnItemClickListener(new AdapterView.OnItemClickListener() {

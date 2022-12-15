@@ -127,27 +127,51 @@
         android:textColor="@color/error"
         />
 
-    <ImageView
-        android:layout_width="250px"
-        android:layout_height="250px"
-        android:id="@+id/imgProfile"
-
-        />
-
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnSaveChanges"
-        android:backgroundTint="@color/successBtn"
-        android:text="Save Changes"
-        />
+        android:orientation="horizontal">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnDeleteUser"
-        android:backgroundTint="@color/error"
-        android:text="Delete"
-        />
+        <ImageView
+            android:layout_width="250px"
+            android:layout_height="250px"
+            android:id="@+id/imgProfile"
+            android:src="@drawable/myicon"
+            />
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            >
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnGotoList"
+                android:backgroundTint="@color/warning"
+                android:text="GoToList"
+                android:onClick="GoToUserList"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnSaveChanges"
+                android:backgroundTint="@color/successBtn"
+                android:text="Save Changes"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnDeleteUser"
+                android:backgroundTint="@color/error"
+                android:text="Delete"
+                />
+        </GridLayout>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

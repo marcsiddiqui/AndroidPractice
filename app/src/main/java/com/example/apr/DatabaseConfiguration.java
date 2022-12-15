@@ -168,11 +168,9 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
             if (cursor.getCount() > 0){
                 Notification notification = new Notification();
                 while (cursor.moveToNext()){
-                    notification.Id = Integer.parseInt(cursor.getString(0).toString());
-                    notification.Title = cursor.getString(1).toString();
-                    notification.Description = cursor.getString(2).toString();
-                    //notification.CreatedOn = cursor.getD(3).toString();
-                    //notification.IsRead = cursor.(4).toString();
+
+                    notification = NotificationBinder(cursor);
+
                 }
                 return notification;
             }
@@ -185,10 +183,14 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
     public ArrayList<Notification> GetAllUnReadNotifications(){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Notification WHERE IsRead = 0", null);
-
-        //Toast.makeText(context, cursor.getCount()+"", Toast.LENGTH_SHORT).show();
-
-        return GenericFunctions.ConvertCursorToClassCollection(cursor, Notification.class);
+        if (cursor.getCount() > 0){
+            ArrayList<Notification> notifications = new ArrayList<>();
+            while (cursor.moveToNext()){
+                notifications.add(NotificationBinder(cursor));
+            }
+            return notifications;
+        }
+        return null;
     }
 
     public void ReadAllNotificaitons(){
@@ -203,25 +205,17 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
         }
     }
 
+    public Notification NotificationBinder(Cursor cursor){
+        Notification notification = new Notification();
+
+        notification.Id = cursor.getInt(0);
+        notification.Title = cursor.getString(1).toString();
+        notification.Description = cursor.getString(2).toString();
+
+        return notification;
+    }
+
     //endregion
-
-
-
-
-
-    public ArrayList<Product> GetAllProducts(){
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Product", null);
-        return GenericFunctions.ConvertCursorToClassCollection(cursor, Product.class);
-    }
-
-    public ArrayList<Order> GetAllOrders(){
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM [Order]", null);
-        return GenericFunctions.ConvertCursorToClassCollection(cursor, Order.class);
-    }
-
-
 
     //region General Methods
 

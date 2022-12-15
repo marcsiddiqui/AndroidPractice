@@ -78,83 +78,120 @@ public class GenericFunctions {
         return hm;
     }
 
-    public static <T> ArrayList<T> ConvertCursorToClassCollection(Cursor cursor, Class<T> cls) {
-        ArrayList<T> li = new ArrayList<>();
-        if (cursor != null && cursor.getCount() > 0) {
-            Field[] fields = cls.getDeclaredFields();
-            String[] columns = cursor.getColumnNames();
-            //Toast.makeText(context, columns.length+"", Toast.LENGTH_SHORT).show();
-            try {
-                while (cursor.moveToNext()) {
-                    T bean = cls.newInstance();
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
 
-                    for (String column : columns) {
-                        //Toast.makeText(context, column, Toast.LENGTH_SHORT).show();
-                        Field field = findFieldByName(fields, column);
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static boolean checkPermission(final Context context)
+    {
+        int currentAPIVersion = Build.VERSION.SDK_INT;
+        if(currentAPIVersion>=android.os.Build.VERSION_CODES.M)
+        {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+                    alertBuilder.setCancelable(true);
+                    alertBuilder.setTitle("Permission necessary");
+                    alertBuilder.setMessage("External storage permission is necessary");
+                    alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                        }
+                    });
+                    AlertDialog alert = alertBuilder.create();
+                    alert.show();
 
-                        field.set(bean, getValueByField(cursor, column, field));
-//                        String letter = column.substring(0, 1)
-//                                .toUpperCase();
-//
-//                        Toast.makeText(context, letter, Toast.LENGTH_SHORT).show();
-//                        String setter = "set" + letter
-//                                + column.substring(1);
-//                        Method setMethod = cls.getMethod(setter,
-//                                new Class[] { field.getType() });
-//                        setMethod.invoke(bean,
-//                                getValueByField(cursor, column, field));
-                    }
-                    li.add(bean);
+                } else {
+                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
                 }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
+                return false;
+            } else {
+                return true;
             }
+        } else {
+            return true;
         }
-        return li;
     }
 
-    private static Field findFieldByName(Field[] fields, String name) {
-        for (Field field : fields) {
-            if (field.getName().equals(name)) {
-                return field;
-            }
-        }
-        return null;
-    }
+    //region Extra Code
 
-    private static Object getValueByField(Cursor cursor, String columnName, Field field) {
-        int index = cursor.getColumnIndex(columnName);
-        if (index == -1)
-            return null;
-        Class fieldClass = field.getType();
+    //    public static <T> ArrayList<T> ConvertCursorToClassCollection(Cursor cursor, Class<T> cls) {
+//        ArrayList<T> li = new ArrayList<>();
+//        if (cursor != null && cursor.getCount() > 0) {
+//            Field[] fields = cls.getDeclaredFields();
+//            String[] columns = cursor.getColumnNames();
+//            //Toast.makeText(context, columns.length+"", Toast.LENGTH_SHORT).show();
+//            try {
+//                while (cursor.moveToNext()) {
+//                    T bean = cls.newInstance();
+//
+//                    for (String column : columns) {
+//                        //Toast.makeText(context, column, Toast.LENGTH_SHORT).show();
+//                        Field field = findFieldByName(fields, column);
+//
+//                        field.set(bean, getValueByField(cursor, column, field));
+////                        String letter = column.substring(0, 1)
+////                                .toUpperCase();
+////
+////                        Toast.makeText(context, letter, Toast.LENGTH_SHORT).show();
+////                        String setter = "set" + letter
+////                                + column.substring(1);
+////                        Method setMethod = cls.getMethod(setter,
+////                                new Class[] { field.getType() });
+////                        setMethod.invoke(bean,
+////                                getValueByField(cursor, column, field));
+//                    }
+//                    li.add(bean);
+//                }
+//            } catch (IllegalAccessException e) {
+//                e.printStackTrace();
+//            } catch (InstantiationException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return li;
+//    }
 
-        String test1 = field.getType().getSimpleName().toLowerCase();
-        String test2 = Byte[].class.getSimpleName().toLowerCase();
+//    private static Field findFieldByName(Field[] fields, String name) {
+//        for (Field field : fields) {
+//            if (field.getName().equals(name)) {
+//                return field;
+//            }
+//        }
+//        return null;
+//    }
 
-        if (fieldClass == String.class)
-            return cursor.getString(index);
-
-        else if (fieldClass == int.class || fieldClass == Integer.class)
-            return cursor.getInt(index);
-        else if (fieldClass == Long.class)
-            return cursor.getLong(index);
-
-        else if (fieldClass == Double.class)
-            return cursor.getDouble(index);
-
-        else if (fieldClass == Float.class)
-            return cursor.getFloat(index);
-
-        else if (fieldClass == Short.class)
-            return cursor.getShort(index);
-
-        else if (test1 == test2)
-            return cursor.getBlob(index);
-
-        return null;
-    }
+//    private static Object getValueByField(Cursor cursor, String columnName, Field field) {
+//        int index = cursor.getColumnIndex(columnName);
+//        if (index == -1)
+//            return null;
+//        Class fieldClass = field.getType();
+//
+//        String test1 = field.getType().getSimpleName().toLowerCase();
+//        String test2 = Byte[].class.getSimpleName().toLowerCase();
+//
+//        if (fieldClass == String.class)
+//            return cursor.getString(index);
+//
+//        else if (fieldClass == int.class || fieldClass == Integer.class)
+//            return cursor.getInt(index);
+//        else if (fieldClass == Long.class)
+//            return cursor.getLong(index);
+//
+//        else if (fieldClass == Double.class)
+//            return cursor.getDouble(index);
+//
+//        else if (fieldClass == Float.class)
+//            return cursor.getFloat(index);
+//
+//        else if (fieldClass == Short.class)
+//            return cursor.getShort(index);
+//
+//        else if (test1 == test2)
+//            return cursor.getBlob(index);
+//
+//        return null;
+//    }
 
 //    public static void SendEmail(Context context){
 //        // email ID of Recipient.
@@ -234,39 +271,5 @@ public class GenericFunctions {
 ////        }
 //    }
 
-    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public static boolean checkPermission(final Context context)
-    {
-        int currentAPIVersion = Build.VERSION.SDK_INT;
-        if(currentAPIVersion>=android.os.Build.VERSION_CODES.M)
-        {
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-                    alertBuilder.setCancelable(true);
-                    alertBuilder.setTitle("Permission necessary");
-                    alertBuilder.setMessage("External storage permission is necessary");
-                    alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-                        public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                        }
-                    });
-                    AlertDialog alert = alertBuilder.create();
-                    alert.show();
-
-                } else {
-                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return true;
-        }
-    }
-
+    //endregion
 }

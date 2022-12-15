@@ -2,10 +2,10 @@ package com.example.apr;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -13,54 +13,47 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.prefs.BackingStoreException;
 
-public class UserAdapter extends BaseAdapter {
+public class UserAdapter extends SimpleAdapter {
 
     Context context;
-    ArrayList<User> users;
+    ArrayList<HashMap<String, String>> data;
+    LayoutInflater layoutInflater;
+    ArrayList<User> Users;
+    DatabaseConfiguration databaseConfiguration;
 
-    public UserAdapter(Context context, ArrayList<User> users) {
+    public UserAdapter(Context context, ArrayList<HashMap<String, String>> data, int resource, String[] from, int[] to) {
+        super(context, data, resource, from, to);
+
         this.context = context;
-        this.users = users;
-    }
-
-    @Override
-    public int getCount() {
-        return users.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return users.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
+        this.data = data;
+        this.layoutInflater.from(context);
+        databaseConfiguration = new DatabaseConfiguration(context);
+        this.Users = databaseConfiguration.GetAllUsers();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = layoutInflater.inflate(R.layout.activity_act_user_list_template, null);
+        View view=super.getView(position, convertView, parent);
 
-        ImageView imgProfileImg = (ImageView) convertView.findViewById(R.id.imgProfileImg);
-        TextView user_Email = (TextView) convertView.findViewById(R.id.user_Email);
-        TextView user_Username = (TextView) convertView.findViewById(R.id.user_Username);
-        TextView user_LastName = (TextView) convertView.findViewById(R.id.user_LastName);
-        TextView user_FirstName = (TextView) convertView.findViewById(R.id.user_FirstName);
 
-        User user = users.get(position);
+        ImageView imgProfileImg = (ImageView) view.findViewById(R.id.imgProfileImg);
 
-        user_Username.setText(user.Username);
-        user_LastName.setText(user.LastName);
-        user_FirstName.setText(user.FirstName);
-        user_Email.setText(user.Email);
+        User user = Users.get(position);
 
-        imgProfileImg.setImageBitmap(BitmapFactory.decodeByteArray(user.ProfileImage,0,user.ProfileImage.length));
+        if (user != null && user.ProfileImage != null){
+            try{
+                imgProfileImg.setImageBitmap(BitmapFactory.decodeByteArray(user.ProfileImage,0,user.ProfileImage.length));
+            }
+            catch (Exception e) {
+                imgProfileImg.setImageResource(R.drawable.myicon);
+            }
+        }
+        else {
+            imgProfileImg.setImageResource(R.drawable.myicon);
+        }
 
-        return convertView;
+        return view;
     }
 }
