@@ -50,4 +50,13 @@
         android:onClick="GoToNotifications"
         />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnnTestEmail"
+        android:backgroundTint="@color/successBtn"
+        android:text="Send Test Email"
+        android:onClick="SendTestEmail"
+        />
+
 </LinearLayout>

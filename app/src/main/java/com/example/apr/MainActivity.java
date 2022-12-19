@@ -10,6 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Properties;
+
+import javax.mail.Session;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -86,5 +89,21 @@ public class MainActivity extends AppCompatActivity {
         // Explicit
         Intent obj = new Intent(getApplicationContext(), Act_NotificationList.class);
         startActivity(obj);
+    }
+
+    public void SendTestEmail(View view) {
+        System.out.println("SimpleEmail Start");
+
+        String smtpHostServer = "smtp-relay.gmail.com";
+        String emailID = "and.java.mail@gmail.com";
+
+        Properties props = System.getProperties();
+
+        props.put("mail.smtp.host", smtpHostServer);
+
+        Session session = Session.getInstance(props, null);
+
+        EmailUtil.sendEmail(session, emailID,"SimpleEmail Testing Subject", "SimpleEmail Testing Body");
+
     }
 }

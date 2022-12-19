@@ -27,13 +27,24 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE User (Id INTEGER PRIMARY KEY AUTOINCREMENT, FirstName TEXT, LastName TEXT, Email Text, Username TEXT, Password TEXT, CreatedOn DATETIME)");
+
+        if (!IsColumnExists("User", "UserType")){
+            db.execSQL("ALTER TABLE User ADD UserType INTEGER DEFAULT 0 NOT NULL");
+        }
+
+        db.execSQL("insert into User (firstname, lastname, email, username, password, createdon, usertype) values ('ali','haider','ali@gmail.com','ali','123456',date(), 1)");
+        db.execSQL("CREATE TABLE Notification (Id INTEGER PRIMARY KEY AUTOINCREMENT, Title TEXT, Description TEXT, CreatedOn DATETIME, IsRead BIT)");
+
+        if (!IsColumnExists("User", "ProfileImage")){
+            db.execSQL("ALTER TABLE User ADD ProfileImage BLOG");
+        }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (newVersion > oldVersion){
-            db.execSQL("alter table User ADD UserType INT NOt NULL DEFAULT 0");
-        }
+//        if (newVersion > oldVersion){
+//            db.execSQL("alter table User ADD UserType INT NOt NULL DEFAULT 0");
+//        }
     }
 
     //region User Related Methods
@@ -235,14 +246,14 @@ public class DatabaseConfiguration extends SQLiteOpenHelper {
 //        if (!IsColumnExists("User", "UserType")){
 //            sqLiteDatabase.execSQL("ALTER TABLE User ADD UserType INTEGER DEFAULT 0 NOT NULL");
 //        }
-////         sqLiteDatabase.execSQL("DELETE FROM User");
-//         sqLiteDatabase.execSQL("insert into User (firstname, lastname, email, username, password, createdon, usertype) values ('ali','haider','ali@gmail.com','ali','123456',date(), 1)");
+//         sqLiteDatabase.execSQL("DELETE FROM User");
+//        sqLiteDatabase.execSQL("insert into User (firstname, lastname, email, username, password, createdon, usertype) values ('ali','haider','ali@gmail.com','ali','123456',date(), 1)");
 //        sqLiteDatabase.execSQL("CREATE TABLE Notification (Id INTEGER PRIMARY KEY AUTOINCREMENT, Title TEXT, Description TEXT, CreatedOn DATETIME, IsRead BIT)");
-////
-////        sqLiteDatabase.execSQL("UPDATE Notification SET IsRead = 0");
-////
-//            //sqLiteDatabase.execSQL("alter table User drop column ProfileImage");
 //
+//        sqLiteDatabase.execSQL("UPDATE Notification SET IsRead = 0");
+//
+            //sqLiteDatabase.execSQL("alter table User drop column ProfileImage");
+
 //        if (!IsColumnExists("User", "ProfileImage")){
 //            sqLiteDatabase.execSQL("ALTER TABLE User ADD ProfileImage BLOG");
 //        }

@@ -47,11 +47,11 @@ public class UserAdapter extends SimpleAdapter {
                 imgProfileImg.setImageBitmap(BitmapFactory.decodeByteArray(user.ProfileImage,0,user.ProfileImage.length));
             }
             catch (Exception e) {
-                imgProfileImg.setImageResource(R.drawable.myicon);
+                imgProfileImg.setImageResource(R.drawable.profile);
             }
         }
         else {
-            imgProfileImg.setImageResource(R.drawable.myicon);
+            imgProfileImg.setImageResource(R.drawable.profile);
         }
 
         return view;

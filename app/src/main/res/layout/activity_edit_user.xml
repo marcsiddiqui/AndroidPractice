@@ -136,7 +136,7 @@
             android:layout_width="250px"
             android:layout_height="250px"
             android:id="@+id/imgProfile"
-            android:src="@drawable/myicon"
+            android:src="@drawable/profile"
             />
 
         <GridLayout
