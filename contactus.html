@@ -1,0 +1,367 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+	<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin ='anonymous'></script>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Poppins" rel="stylesheet">
+<style>
+body {
+    font-family: Arial, Helvetica, sans-serif;}
+* { box-sizing: border-box;}
+ 
+	li{
+		display: inline-block;
+	}
+	
+	
+.column {
+  float: left;
+  width: 25%;
+  padding: 10px;
+  height: 660px; 
+  border-radius: 5px;
+  margin-left: 2%;
+  color: #2a4785;
+  text-align: center;
+  font-weight: bold;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+ background-color: rgb(180, 204, 235);
+ box-shadow: 10px 10px 5px rgb(169, 176, 179);
+}
+ 
+
+#icon {
+  cursor: pointer;
+    color: #2a4785;
+    border-radius: 100%;
+    border-color: #f5f5f5;
+    background-color: #edf1f5;
+    padding: 10px;
+    size: 30px;
+    margin-left: 5%;
+}
+
+
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #2a4785 ;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+  background-color:none;
+  
+}
+
+input[type=button] {
+  background-color:#2a4785;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 41%;
+  margin-left: 29.5%;
+  margin-right: 100%;
+  box-shadow: 10px 10px 5px rgb(122, 131, 134);
+ 
+}
+
+input[type=button]:hover {
+  background-color:   #4365af;
+  
+}
+
+.container {
+  border-radius: 5px;
+  background-color:  #2a4785;
+  padding: 20px;
+  width: 40%;
+  margin: auto;
+  box-shadow: 10px 10px 5px rgb(145, 152, 155);
+  
+}
+
+ 
+
+
+
+label {
+    color: white;
+
+}
+
+.material-icons {
+    margin: 10px 28px;
+    cursor: pointer;
+    color: white;
+    border-radius: 100%;
+    border-color: #2a4785;
+    background-color: #2a4785;
+    padding: 15px;
+   
+    
+    
+}
+
+#iconMargin {
+  margin-left:5px;
+}
+
+a {
+    text-align: center;
+    padding: 12px;
+    margin-left: 10px;
+    color: rgb(129, 173, 230);
+    font-weight: bold;
+
+   
+}
+
+
+h3 {
+  margin-top: 5%;
+  text-align: center;
+  font-size: xx-large;
+  color: #2a4785;
+  text-shadow:  4px 2px 2px  #b3b6be;
+  font-weight: bold;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+p {
+  font-size: small;
+}
+
+
+h2 {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: large;
+}
+
+h4 {font-family:  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  font-size: x-large;
+
+}
+
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1;
+  padding-top: 300px; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: white; 
+  
+}
+
+/* Modal Content */
+.modal-content {
+  color: #2a4785;
+  background-color: #8aa0cf;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid rgb(180, 204, 235);
+  width: 40%;
+  font-weight: 700;
+  border-radius: 10px;
+
+
+}
+
+
+
+
+/* The Close Button */
+.close {
+  color: rgb(180, 204, 235);
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #2a4785;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+</style>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" id="navbar">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="About us.html">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contactus.html">Contact Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="feed.html">FeedBack</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="text" placeholder="Search">
+        <button class="btn btn-primary" type="button">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+  <img src="img/contact-us-scaled-1.jpg" alt="contactpic" height="490" width="1250">
+
+  
+<h3>Get in Touch </h3>
+
+<div style="text-align: left" id="iconMargin">
+
+  <a href="tel:+92 336 8442078"><i class="material-icons" style="font-size:36px">call</i></a>
+
+  <a href="mailto:uniform@gmail.com"><i class="material-icons" style="font-size:36px">email</i></a>
+  
+</div>
+  
+<div>
+ <a href="tel:+92 336 8442078">+92 336 8442078</a>
+
+ <a href="mailto:uniform@gmail.com">uniform@gmail.com</a>
+</div>
+<br>
+
+<div class="column">
+
+  <h4 >OUR BRANCH</h4>
+  <a href="https://goo.gl/maps/b9wbpFJh4Tvj7Uqr6" target="_blank"><i  id="icon" class="material-icons"
+      style="font-size:30px" >location_on</i></a>
+  
+      <h2>North Karachi</h2>
+      <p>Plot 961, Sector 11-B Sector 11 B North Karachi Twp, Karachi, Karachi City, Sindh, Pakistan</p>
+   <hr>   
+
+  <a href="https://goo.gl/maps/fwqVtGV1xLpcLrxE6" target="_blank"><i  id="icon" class="material-icons"
+      style="font-size:30px" >location_on</i></a>
+  
+       <h2>Main Saddar Hyderabad</h2>
+       <p>P99P7+MPQ, Saddar, Hyderabad, Sindh, Pakistan</p>
+   <hr>
+
+
+  <a href="https://goo.gl/maps/FGad3ikMi6E2SDyo6" target="_blank"><i id="icon" class="material-icons"
+      style="font-size:30px" >location_on</i></a>
+  
+       <h2>Central Islamabads</h2>
+       <p>Street Number 21, Ghori Town Phase 4-A ,, Islamabad Capital Territory, Pakistan</p>
+    
+</div>
+
+
+ <div class="container">
+  <form>
+
+
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name.." required>
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name.." required>
+
+    <label for="City">City</label>
+   
+    <select id="City" name="City" required >
+      <option value="Karachi">City</option>
+      <option value="Karachi">Karachi</option>
+      <option value="Hyderabad">Hyderabad</option>
+      <option value="Islamabad">Islamabad</option>
+    </select>
+
+    <label for="Branch">Branch</label>
+    
+    <select id="Branch" name="Branch" required>
+      <option value="Karachi">Branch</option>
+      <option value="North Karachi">North Karachi</option>
+      <option value="Hyderabad">Main Saddar Hyderabad</option>
+      <option value="Islamabad">Central Islamabad</option>
+    </select>
+
+
+    <label for="subject">Subject</label>
+    <textarea id="subject" name="subject" placeholder="Messsage.." style="height:200px" ></textarea>
+
+    <br>
+    
+    
+  
+</div>
+ 
+<input type="button" value="Submit" id="submit_trigger">
+
+
+</form>
+
+<div id="myModal" class="modal">
+
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <i class="material-icons" style="font-size:80px;color:rgb(156, 193, 228); margin-left: 170px;">check_circle</i>
+    <p style="font-size:xx-large ; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif; margin-left: 130px; font-weight: bold; " >
+    
+    Thank you<p>
+   <p style="font-size: medium ; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif; margin-left: 50px;" >
+     Your detail has been successfully submitted </p>
+  </div>
+
+</div>
+
+</body>
+
+<script>
+
+var modal = document.getElementById("myModal");
+
+
+var btn = document.getElementById("submit_trigger");
+
+
+var span = document.getElementsByClassName("close")[0];
+
+
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+</html>
